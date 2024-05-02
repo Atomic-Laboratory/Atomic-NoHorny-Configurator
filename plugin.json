@@ -1,0 +1,12 @@
+{
+  "name": "atomic-nohorny-configurator",
+  "displayName": "No Horny Configurator",
+  "author": "Atomic Laboratories",
+  "main": "anhc.NHConfigurator",
+  "description": "Change how no horny behaves",
+  "version": 1.0,
+  "dependencies": [
+    "nohorny"
+  ]
+}
+
