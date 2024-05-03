@@ -53,7 +53,7 @@ public class NHConfigurator extends Plugin {
 
     private static long getImageID(BufferedImage image) {
         long compression = 10_000L;
-        if (image.getWidth() < 176 || image.getHeight() < 176) compression /= 64;
+        if (image.getWidth() < 176 || image.getHeight() < 176) compression /= 32;
 
         long id = 0L;
 
