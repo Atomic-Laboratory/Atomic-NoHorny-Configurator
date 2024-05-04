@@ -28,6 +28,7 @@ import javax.imageio.ImageIO;
 
 import com.xpdustry.nohorny.geometry.Cluster;
 import mindustry.Vars;
+import mindustry.content.Blocks;
 import mindustry.game.Schematic;
 import mindustry.game.Schematics;
 import mindustry.game.Schematic.Stile;
@@ -35,7 +36,6 @@ import mindustry.gen.Building;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Player;
-import mindustry.gen.Unit;
 import mindustry.mod.Plugin;
 import mindustry.net.Administration;
 
@@ -47,7 +47,7 @@ public class NHConfigurator extends Plugin {
     private static StringMap badCache = new StringMap();
     static StringMap warnings = new StringMap();
     private static Fi currentLogFile = null;
-    private final Fi logFolder = Core.settings.getDataDirectory().child("nhc-logs/");;
+    private final Fi logFolder = Core.settings.getDataDirectory().child("nhc-logs/");
     private final Fi imageFolder = logFolder.child("images/");
     private final Fi schematicFolder = logFolder.child("schematics/");
 
@@ -136,28 +136,14 @@ public class NHConfigurator extends Plugin {
             }
 
             if (Config.delete.bool()) {
-                Player p = Groups.player.find((p1) -> p1.uuid().equals(uuid));
-                Unit u;
-                if (p == null) {
-                    if (Groups.player.isEmpty()) {
-                        u = Groups.unit.first();
-                    } else {
-                        u = Groups.player.first().unit();
-                    }
-                } else {
-                    u = p.unit();
-                }
-
                 for (final var block : event.getCluster().getBlocks()) {
                     if (block.getPayload() instanceof NoHornyImage.Display display) {
                         for (final var entry : display.getProcessors().entrySet()) {
                             final var point = entry.getKey();
-                            var t = Vars.world.tile(point.getX(), point.getY());
-                            Call.deconstructFinish(t, t.block(), u);
+                            Vars.world.tile(point.getX(), point.getY()).setNet(Blocks.air);
                         }
                     }
-                    var t = Vars.world.tile(block.getX(), block.getY());
-                    Call.deconstructFinish(t, t.block(), u);
+                    Vars.world.tile(block.getX(), block.getY()).setNet(Blocks.air);
                 }
             }
 
