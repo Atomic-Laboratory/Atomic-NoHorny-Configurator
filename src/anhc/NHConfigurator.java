@@ -90,8 +90,10 @@ public class NHConfigurator extends Plugin {
 
             if (Config.saveEvidence.bool()) {
                 long id = getImageID(event.getImage());
-                if (!cache.get(Long.toString(id)).isEmpty()) {
+                var a = cache.get(Long.toString(id));
+                if (!a.isEmpty()) {
                     Log.debug("@ already saved!", id);
+                    nsfwID = a;
                 } else {
                     String fileName = id + ".msch";
                     cache.put(Long.toString(id), fileName);
